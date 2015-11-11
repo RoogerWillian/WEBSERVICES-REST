@@ -36,13 +36,15 @@ public class ClientTestPost {
 		WebTarget target = client.target("http://localhost:8080");
 		
 		Carrinho carrinho = new Carrinho();
-        carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
+        carrinho.adiciona(new Produto(314L, "MotorolaMotoX", 999, 1));
         carrinho.setRua("Rua Vergueiro");
         carrinho.setCidade("Sao Paulo");
         String xml = carrinho.toXml();
         
         Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
         Response response = target.path("/carrinhos").request().post(entity);
+        String location = response.getHeaderString("Location");
+        System.out.println(location);
         Assert.assertEquals(201, response.getStatus());
         
 	}
